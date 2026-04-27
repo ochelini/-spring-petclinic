@@ -1,4 +1,5 @@
-pipeline { any
+pipeline {
+    agent any
 
     environment {
         ARTIFACTORY_URL  = 'http://172.17.0.1:8081/artifactory'

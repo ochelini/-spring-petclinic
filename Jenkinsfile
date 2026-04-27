@@ -72,6 +72,24 @@ pipeline {
                 }
             }
         }
+        stage('Docker Build & Push') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'artifactory-creds',
+                usernameVariable: 'ART_USER',
+                passwordVariable: 'ART_PASS'
+            )
+        ]) {
+            sh '''
+              docker build -t petclinic:${BUILD_NUMBER} .
+              docker login 172.17.0.1:8082 -u $ART_USER -p $ART_PASS
+              docker tag petclinic:${BUILD_NUMBER} 172.17.0.1:8082/petclinic:${BUILD_NUMBER}
+              docker push 172.17.0.1:8082/petclinic:${BUILD_NUMBER}
+            '''
+        }
+    }
+}
     }
 }
 ``

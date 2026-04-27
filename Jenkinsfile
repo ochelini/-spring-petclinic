@@ -1,3 +1,7 @@
+environment {
+    ARTIFACTORY_URL  = 'http://172.17.0.1:8081/artifactory'
+    ARTIFACTORY_REPO = 'libs-release-local'
+}
 pipeline {
     agent any
 

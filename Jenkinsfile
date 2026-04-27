@@ -31,26 +31,27 @@ pipeline {
             }
         }
 
-        stage('Upload to Artifactory') {
-            steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'artifactory-creds',
-                        usernameVariable: 'ARTIFACTORY_USER',
-                        passwordVariable: 'ARTIFACTORY_PASSWORD'
-                    )
-                ]) {
-                    sh '''
-                      set -e
-                      jfrog rt u "target/*.jar" $ARTIFACTORY_REPO/ \
-                        --url=$ARTIFACTORY_URL \
-                        --user=$ARTIFACTORY_USER \
-                        --password=$ARTIFACTORY_PASSWORD \
-                        --flat=true
-                    
-                }
-            }
+       stage('Upload to Artifactory') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'artifactory-creds',
+                usernameVariable: 'ARTIFACTORY_USER',
+                passwordVariable: 'ARTIFACTORY_PASSWORD'
+            )
+        ]) {
+            sh '''
+              set -e
+              jfrog --version
+              jfrog rt u "target/*.jar" ${ARTIFACTORY_REPO}/ \
+                --url=${ARTIFACTORY_URL} \
+                --user=$ARTIFACTORY_USER \
+                --password=$ARTIFACTORY_PASSWORD \
+                --flat=true
+            '''
         }
+    }
+}
 
         stage('Publish Build Info') {
             steps {

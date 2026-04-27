@@ -26,8 +26,8 @@ pipeline {
                   trivy fs \
                     --severity HIGH,CRITICAL \
                     --exit-code 0 \
-                    .
-                '''
+                    
+                
             }
         }
 
@@ -47,7 +47,7 @@ pipeline {
                         --user=$ARTIFACTORY_USER \
                         --password=$ARTIFACTORY_PASSWORD \
                         --flat=true
-                    '''
+                    
                 }
             }
         }
@@ -68,7 +68,7 @@ pipeline {
                         --url=$ARTIFACTORY_URL \
                         --user=$ARTIFACTORY_USER \
                         --password=$ARTIFACTORY_PASSWORD
-                    '''
+                    
                 }
             }
         }
@@ -86,7 +86,7 @@ pipeline {
               docker login 172.17.0.1:8082 -u $ART_USER -p $ART_PASS
               docker tag petclinic:${BUILD_NUMBER} 172.17.0.1:8082/petclinic:${BUILD_NUMBER}
               docker push 172.17.0.1:8082/petclinic:${BUILD_NUMBER}
-            '''
+            
         }
     }
 }
